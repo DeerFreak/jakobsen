@@ -20,15 +20,26 @@ if __name__ == "__main__":
     winkel_const = 360/512
     try:
         while True:
-            soll_winkel_ebene, soll_winkel_hoehe = API.get_data()
-            schritte_ebene = int((soll_winkel_ebene-akt_winkel_ebene)*step_const)
-            akt_winkel_ebene += schritte_ebene*winkel_const
+            soll_winkel_ebene, soll_winkel_hoehe = api.get_data()
+            print("Soll Winkel: " + str(soll_winkel_ebene) + "  " + str(soll_winkel_hoehe))
+
+            schritte_ebene = (soll_winkel_ebene-akt_winkel_ebene)*step_const
+            print(schritte_ebene)
+            akt_winkel_ebene = akt_winkel_ebene + schritte_ebene*winkel_const
+            akt_winkel_ebene = akt_winkel_ebene % 360
+
+            schritte_hoehe = (soll_winkel_hoehe-akt_winkel_hoehe)*step_const
+            print(schritte_hoehe)
+            akt_winkel_hoehe = akt_winkel_hoehe + schritte_hoehe*winkel_const
+            akt_winkel_hoehe = akt_winkel_hoehe % 360
+
+            print("Aktuelle Winkel: " + str(akt_winkel_ebene) + "  " + str(akt_winkel_hoehe))
+
             if schritte_ebene >= 0:
                 servo1.drehen(schritte_ebene)
             else:
                 servo1.drehen_rueckwaerts(-schritte_ebene)
-            schritte_hoehe = int((soll_winkel_hoehe-akt_winkel_hoehe)*step_const)
-            akt_winkel_hoehe += schritte_hoehe*winkel_const
+
             if schritte_hoehe >= 0:
                 servo2.drehen(schritte_hoehe)
             else:
