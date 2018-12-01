@@ -15,23 +15,21 @@ api = API()
 
 if __name__ == "__main__":
     akt_winkel_ebene = 0
+    servo2.drehen(30)
+    servo2.drehen_rueckwaerts(30)
     akt_winkel_hoehe = 0
-    step_const = 512/360
-    winkel_const = 360/512
+    step_const = 512.0/360
+    winkel_const = 360.0/512
     try:
         while True:
             soll_winkel_ebene, soll_winkel_hoehe = api.get_data()
             print("Soll Winkel: " + str(soll_winkel_ebene) + "  " + str(soll_winkel_hoehe))
 
-            schritte_ebene = (soll_winkel_ebene-akt_winkel_ebene)*step_const
-            print(schritte_ebene)
+            schritte_ebene = int((soll_winkel_ebene-akt_winkel_ebene)*step_const)
             akt_winkel_ebene = akt_winkel_ebene + schritte_ebene*winkel_const
-            akt_winkel_ebene = akt_winkel_ebene % 360
 
-            schritte_hoehe = (soll_winkel_hoehe-akt_winkel_hoehe)*step_const
-            print(schritte_hoehe)
+            schritte_hoehe = int((soll_winkel_hoehe-akt_winkel_hoehe)*step_const)
             akt_winkel_hoehe = akt_winkel_hoehe + schritte_hoehe*winkel_const
-            akt_winkel_hoehe = akt_winkel_hoehe % 360
 
             print("Aktuelle Winkel: " + str(akt_winkel_ebene) + "  " + str(akt_winkel_hoehe))
 
